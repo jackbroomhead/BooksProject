@@ -93,7 +93,7 @@ public ArrayList<Book> getAllBooks() throws SQLException {
 		}
 	}
 	// do the following even if there is an exception
-	finally {
+	finally { 
 	
 		if (result != null) { result.close(); }
 		if (statement != null) { statement.close(); }
@@ -123,7 +123,7 @@ Scanner scanner=new Scanner(System.in);
 	
 	try {
 		dbConnection = getDBConnection();
-		statement = dbConnection.createStatement();
+		statement = dbConnection.createStatement(); 
 		System.out.println("DBQuery: " + query); /* run the query */
 		// execute SQL query
 		result = statement.executeQuery(query);
@@ -143,6 +143,7 @@ Scanner scanner=new Scanner(System.in);
 			String notes = result.getString("Notes");
 			
 			temp = new Book(bookID, title, author, year, edition, publisher, isbn, cover, condition, price, notes);
+			System.out.println(bookID + " " + title + " " + author + " " + year + " " + edition + " " + publisher + " " + isbn + " " + cover + " " + condition + " " + price + " " + notes);
 
 		}
 	} finally {

@@ -36,8 +36,8 @@ public class Controller {
 				case 2: {
 					System.out.println("You chose option 2");
 					System.out.println("Search for book based on ID");
-					System.out.println("Please type the Book ID");
 					
+				
 					bookShop.getBook();	
 					//need to ask and scan for the book ID and then once finding the book ID you need to link that to the .getbook and
 					//make it find it in the database using 2 string method
@@ -56,8 +56,6 @@ public class Controller {
 					System.out.println("You chose option 3");
 					System.out.println("Insert new book into database");
 					
-					
-		//			for (Book d : bookShop.insertBook() );
 					
 					System.out.println("---------------------");
 					System.out.println();	
@@ -84,7 +82,6 @@ public class Controller {
 				case 5: {
 					System.out.println("You chose option 5");
 					System.out.println("Delete book from database");
-					
 					
 					System.out.println("---------------------");
 					System.out.println();	
