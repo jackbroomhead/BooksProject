@@ -1,8 +1,9 @@
+import java.io.IOException;
 import java.sql.SQLException;
 import com.booklib.menu.BookMenu;
 import java.util.Scanner;
 public class Controller {
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, NumberFormatException, IOException {
 		
 		BookMenu shopWindow = new BookMenu();
 		BookDao bookShop = new BookDao();
@@ -56,6 +57,7 @@ public class Controller {
 					System.out.println("You chose option 3");
 					System.out.println("Insert new book into database");
 					
+					bookShop.insertBook();
 					
 					System.out.println("---------------------");
 					System.out.println();	

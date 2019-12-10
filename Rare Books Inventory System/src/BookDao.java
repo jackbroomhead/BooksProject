@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -159,22 +162,52 @@ Scanner scanner=new Scanner(System.in);
 	}
 }
 
-public Boolean deleteBook(int book_ID) throws SQLException {
-	Scanner scanner=new Scanner(System.in);
+public void deleteBook() throws SQLException {
+	
+Scanner scanner=new Scanner(System.in);
+	Book temp = null;
+	Connection dbConnection = null; /** The database connection */
+	Statement statement = null; /** The statement object executes operations on the database */
+	ResultSet result = null; /** The ResultSet stores the data returned from the database after executing a query. */
+	
+	/** enter the book ID to be used in the SQL selection to locate book ID */
+	
 	System.out.println("Enter Book ID please: ");
 	int book_id = scanner.nextInt();
-	System.out.println("Deleting book");
-	Connection dbConnection = null;
-	Statement statement = null;
-	int result = 0;
-	String query = "DELETE FROM books WHERE ID = " + book_ID + ";";
+	
+	String query = "DELETE FROM books WHERE ID =" + book_id + ";"; // SQL Statement
+	
+	System.out.println("deleting your book now");
+	
 	try {
 		dbConnection = getDBConnection();
-		statement = dbConnection.createStatement();
-		System.out.println(query);
+		statement = dbConnection.createStatement(); 
+		System.out.println("DBQuery: " + query); /* run the query */
 		// execute SQL query
-		result = statement.executeUpdate(query);
+		result = statement.executeQuery(query);
+
+		while (result.next()) {
+
+			int bookID = result.getInt("ID");
+			String title = result.getString("Title");
+			String author = result.getString("Author");
+			int year = result.getInt("Year");
+			int edition = result.getInt("Edition");
+			String publisher = result.getString("Publisher");
+			String isbn = result.getString("isbn");
+			String cover = result.getString("Cover");
+			String condition = result.getString("Condition");
+			int price = result.getInt("Price");
+			String notes = result.getString("Notes");
+			
+			temp = new Book(bookID, title, author, year, edition, publisher, isbn, cover, condition, price, notes);
+			System.out.println(bookID + " " + title + " " + author + " " + year + " " + edition + " " + publisher + " " + isbn + " " + cover + " " + condition + " " + price + " " + notes);
+
+		}
 	} finally {
+		if (result != null) {
+			result.close();
+		}
 		if (statement != null) {
 			statement.close();
 		}
@@ -182,26 +215,58 @@ public Boolean deleteBook(int book_ID) throws SQLException {
 			dbConnection.close();
 		}
 	}
-	if (result == 1) {
-		return true;
-	} else {
-		return false;
-	}
 }
 
-public boolean insertBook(Book in) throws SQLException{
+public void insertBook() throws SQLException, NumberFormatException, IOException{
 	Connection dbConnection = null;
 	Statement statement = null;
+	BufferedReader br = new BufferedReader(new
+	        InputStreamReader(System.in)); 
 	
-	String update = "INSERT INTO books (ID, Title, Author, Year, Edition, Publisher, ISBN, Cover, Condition, Price, Notes) VALUES ("+in.getbookID()+",'"+in.getTitle()+"','"+in.getAuthor()+"',"+in.getYear()+"','"+in.getEdition()+"','"+in.getPublisher()+"','"+in.getIsbn()+"','"+in.getCover()+"','"+in.getCondition()+"','"+in.getPrice()+"','"+in.getNotes()+");";
-	boolean ok = false;
+	System.out.println("Enter Book ID please: ");
+	int idvalue = Integer.parseInt(br.readLine());
+	
+	System.out.println("Enter Book title please: ");
+	String titlevalue = br.readLine(); 
+	
+	System.out.println("Enter Author Name please: ");
+	String authorvalue = br.readLine();
+	
+	System.out.println("Enter Year please: ");
+	int yearvalue = Integer.parseInt(br.readLine());
+	
+	System.out.println("Enter Edition please: ");
+	int editionvalue = Integer.parseInt(br.readLine());
+	
+	System.out.println("Enter Publisher Name please: ");
+	String publishervalue = br.readLine();
+	
+	System.out.println("Enter ISBN please: ");
+	String isbnvalue = br.readLine();
+	
+	System.out.println("Enter Cover please: ");
+	String covervalue = br.readLine();
+	
+	System.out.println("Enter Condition please: ");
+	String conditionvalue = br.readLine();
+	
+	System.out.println("Enter Price please: ");
+	int pricevalue = Integer.parseInt(br.readLine());
+	
+	System.out.println("Enter Notes please: ");
+	String notesvalue = br.readLine();
+	
+	String update = "INSERT INTO books (ID, Title, Author, Year, Edition, Publisher, ISBN, Cover, Condition, Price, Notes)"
+			+ " VALUES("+idvalue+",'"+titlevalue+"','"+authorvalue+"',"+yearvalue+","+editionvalue+",'"+publishervalue+"','"+isbnvalue+"','"+covervalue+"','"+conditionvalue+"',"+pricevalue+",'"+notesvalue+"');";
+	
 	try {
 		dbConnection = getDBConnection();
 		statement = dbConnection.createStatement();
 		System.out.println(update);
 // execute SQL query
 		statement.executeUpdate(update);
-		ok = true;
+
+		System.out.println("record inserted");
 	} catch (SQLException e) {
 		System.out.println(e.getMessage());
 	} finally {
@@ -213,7 +278,6 @@ public boolean insertBook(Book in) throws SQLException{
 		}
 		
 	}
-return ok;
 }
 
 
