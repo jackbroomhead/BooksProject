@@ -85,6 +85,8 @@ public class Controller {
 					System.out.println("You chose option 5");
 					System.out.println("Delete book from database");
 					
+					bookShop.deleteBook();
+					
 					System.out.println("---------------------");
 					System.out.println();	
 				

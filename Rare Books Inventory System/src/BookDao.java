@@ -162,60 +162,46 @@ Scanner scanner=new Scanner(System.in);
 	}
 }
 
-public void deleteBook() throws SQLException {
+public void deleteBook() throws SQLException, NumberFormatException, IOException {
 	
-Scanner scanner=new Scanner(System.in);
-	Book temp = null;
-	Connection dbConnection = null; /** The database connection */
-	Statement statement = null; /** The statement object executes operations on the database */
-	ResultSet result = null; /** The ResultSet stores the data returned from the database after executing a query. */
-	
+	Connection dbConnection = null;
+	Statement statement = null;
 	/** enter the book ID to be used in the SQL selection to locate book ID */
-	
+	BufferedReader br = new BufferedReader(new
+	        InputStreamReader(System.in)); 
 	System.out.println("Enter Book ID please: ");
-	int book_id = scanner.nextInt();
-	
-	String query = "DELETE FROM books WHERE ID =" + book_id + ";"; // SQL Statement
-	
-	System.out.println("deleting your book now");
+	int book_id = Integer.parseInt(br.readLine());
 	
 	try {
 		dbConnection = getDBConnection();
-		statement = dbConnection.createStatement(); 
-		System.out.println("DBQuery: " + query); /* run the query */
-		// execute SQL query
-		result = statement.executeQuery(query);
-
-		while (result.next()) {
-
-			int bookID = result.getInt("ID");
-			String title = result.getString("Title");
-			String author = result.getString("Author");
-			int year = result.getInt("Year");
-			int edition = result.getInt("Edition");
-			String publisher = result.getString("Publisher");
-			String isbn = result.getString("isbn");
-			String cover = result.getString("Cover");
-			String condition = result.getString("Condition");
-			int price = result.getInt("Price");
-			String notes = result.getString("Notes");
-			
-			temp = new Book(bookID, title, author, year, edition, publisher, isbn, cover, condition, price, notes);
-			System.out.println(bookID + " " + title + " " + author + " " + year + " " + edition + " " + publisher + " " + isbn + " " + cover + " " + condition + " " + price + " " + notes);
-
-		}
-	} finally {
-		if (result != null) {
-			result.close();
-		}
-		if (statement != null) {
-			statement.close();
-		}
-		if (dbConnection != null) {
-			dbConnection.close();
-		}
+          //Class.forName("org.sqlite.JDBC");
+          //connection = DriverManager.getConnection("jdbc:sqlite:contacts.sqlite");
+          //connection.setAutoCommit(false);
+          
+		System.out.println("Delete operation -database successfully opened");
+		
+		statement = dbConnection.createStatement();
+          
+		String query = "DELETE FROM books WHERE ID ="+book_id+";";
+          
+		statement.executeUpdate(query);
+          
+		//connection.commit();
+          
+		statement.close();
+          //connection.close();
+	} 
+	catch ( Exception e ) {
+          System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+          System.exit(0);
+        
 	}
+        
+	System.out.println("Delete operation successfully done");
+	
 }
+
+
 
 public void insertBook() throws SQLException, NumberFormatException, IOException{
 	Connection dbConnection = null;
