@@ -267,38 +267,42 @@ public void insertBook() throws SQLException, NumberFormatException, IOException
 }
 
 
-public Boolean updateBook(Book book) throws SQLException {
+public void updateBook() throws SQLException, NumberFormatException, IOException {
 	Connection dbConnection = null;
 	Statement statement = null;
-
-	String query = "UPDATE books " + "SET ID = '" + book.getbookID() + "'," + "Title = '"
-			+ book.getTitle() + "'," + "Author= '" + book.getAuthor() + "'," + "Year= '" + book.getYear() + "Edition= '" + book.getEdition()  + "Publisher= '" + book.getPublisher() + "isbn = '" + book.getIsbn() + "Cover= '" + book.getCover() + "Condition= '" + book.getCondition() + "Price=  '" + book.getPrice() + "Notes= '" + book.getNotes() +" WHERE ID = " + book.getbookID()
-			+ ";";
-
+	ResultSet resultSet =  null;
+	BufferedReader br = new BufferedReader(new
+	        InputStreamReader(System.in)); 
+	
+	System.out.println("Please enter the Book ID: ");
+	int idvalue = Integer.parseInt(br.readLine());
+	
+	
+	System.out.println("Please enter the new price: ");
+	int pricevalue = Integer.parseInt(br.readLine());
+	
 	try {
 		dbConnection = getDBConnection();
-		statement = dbConnection.createStatement();
-		System.out.println(query);
-		// execute SQL update
-		statement.executeUpdate(query);
-
-	} catch (SQLException e) {
-
-		System.out.println(e.getMessage());
-		return false;
-
-	} finally {
-
-		if (statement != null) {
-			statement.close();
-		}
-		if (dbConnection != null) {
-			dbConnection.close();
-		}
-	}
-	return true;
+      
+    	//Class.forName("org.sqlite.JDBC");
+    	//connection = DriverManager.getConnection("jdbc:sqlite:contacts.sqlite");
+    	//connection.setAutoCommit(false);
+    	
+    	System.out.println("Update operation - database successfully opened");
+ 
+    	statement = dbConnection.createStatement();
+    	String sql = "UPDATE books SET Price = "+pricevalue+" WHERE ID = "+idvalue+";";
+    	statement.executeUpdate(sql);
+    	//connection.commit(); 
+    	statement.close();
+    	//connection.close();
+    } 
+    
+    catch ( Exception e ) {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.exit(0);
+    }
 }
-	
 }
 
 

@@ -70,7 +70,9 @@ public class Controller {
 				case 4: {
 					System.out.println("you chose option 4");
 					System.out.println ("Update existing book price details");
+					System.out.println("First type in the book ID of the book you'd like to amend");
 					
+					bookShop.updateBook();
 					
 					System.out.println("---------------------");
 					System.out.println();	
