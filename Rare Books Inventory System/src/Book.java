@@ -1,6 +1,4 @@
-//you need to change the class for searching for the ID and make it different from the book ID variable
-//look at the two examples and see how they did theirs
-//once you've done this you can move on 
+
 public class Book {
 	
 	private int bookID;
@@ -31,10 +29,8 @@ public class Book {
 		
 		
 	}
-	public Book() {
-		
-	}
-	//@return displayString
+	
+	@Override
 	public String toString() {
 		String displayString ="BookID = "+this.bookID+ '\n' +
 				  "Title = "+this.title+ '\n' +
@@ -49,6 +45,20 @@ public class Book {
 				  "Notes = "+this.notes;
 		
 	return displayString;
+	}
+	
+	public String htmlTable() {
+		return "<td>" + bookID + "</td><td>" 
+					  + title + "</td><td>" 
+					  + author + "</td><td>" 
+					  + year + "</td><td>"
+					  + edition + "</td><td>"
+					  + publisher + "</td><td>"
+					  + isbn + "</td><td>"
+					  + cover +"</td><td>"
+					  + condition +"</td><td>"
+					  + price + "</td><td>"
+					  + notes + "</td>";
 	}
 	/**
 	 * @return the book_id

@@ -1,8 +1,22 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.InetSocketAddress;
+import java.net.URLDecoder;
 import java.sql.SQLException;
 import com.booklib.menu.BookMenu;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 public class Controller {
+	
+	
 	public static void main(String[] args) throws SQLException, NumberFormatException, IOException {
 		
 		BookMenu shopWindow = new BookMenu();
@@ -25,7 +39,7 @@ public class Controller {
 					System.out.println("You chose option 1");
 					System.out.println("Printing all books");
 					
-					for (Book d : bookShop.getAllBooks()) {
+					for (Book d : bookShop.getBooks()) {
 						System.out.println("---------------------");
 						System.out.println(d);
 					}
@@ -103,10 +117,25 @@ public class Controller {
 					carryOn = false;
 					break;
 				}
+				
 			}
+	
 		}
+		
 	}
+	
 }
 
+	
+	
+	
+	//-------------------------------------------
+		
 
 
+		
+	
+	
+	
+
+	

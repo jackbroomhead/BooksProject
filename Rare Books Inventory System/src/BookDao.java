@@ -14,7 +14,7 @@ public class BookDao {
  * 
  *
  */
-private static Connection getDBConnection() {
+public Connection getDBConnection() {
 	
 	// Create a connection and specify the database name
 	Connection conn = null;
@@ -29,7 +29,7 @@ private static Connection getDBConnection() {
 		Class.forName("org.sqlite.JDBC");  // initialises the class named "org.sqlite.JDBC" 
 	} 
 	catch (ClassNotFoundException e) {
-		System.out.println("Oh dear!  Have you named the database driver class correctly?");
+		System.out.println("Have you named the database driver class correctly?");
 		System.out.println(e.getMessage());
 	}
 	
@@ -53,14 +53,14 @@ private static Connection getDBConnection() {
  * 
  * @throws SQLException
  */
-public ArrayList<Book> getAllBooks() throws SQLException {
+public ArrayList<Book> getBooks() throws SQLException {
 	
 	Connection dbConnection = null;	// The database connection
 	Statement statement = null;		// The statement object executes operations on the database
 	ResultSet result = null;		// The ResultSet stores the data returned from the database after executing a query.
 	
 	String query = "SELECT * FROM books;"; // An SQL Statement (must be correct).
-	ArrayList<Book> bookList = new ArrayList<>();
+	ArrayList<Book> bookList = new ArrayList<Book>();
 
 	
 	System.out.println("Retrieving all Books...");
@@ -75,25 +75,30 @@ public ArrayList<Book> getAllBooks() throws SQLException {
 		
 		// Go through the ResultSet and extract the required information
 		while(result.next()) {
+			System.out.println(result.getInt("ID")+" "+
+			result.getString("Title") + " "+ 
+			result.getString("Author")+" "+
+			result.getInt("Year")+" "+
+			result.getInt("Edition") +" "+
+			result.getString("Publisher") +" "+
+			result.getString("isbn")+" "+
+			result.getString("Cover")+" "+
+			result.getString("Condition")+" "+
+			result.getInt("Price")+" "+
+			result.getString("Notes"));
 			
-			int bookID = result.getInt("ID");
-			String title = result.getString("Title");
-			String author = result.getString("Author");
-			int year = result.getInt("Year");
-			int edition = result.getInt("Edition");
-			String publisher = result.getString("Publisher");
-			String isbn = result.getString("isbn");
-			String cover = result.getString("Cover");
-			String condition = result.getString("Condition");
-			int price = result.getInt("Price");
-			String notes = result.getString("Notes");
 			
-			
-			System.out.println(bookID + " " + title + " " + author + " " + year + " " + edition + " " + publisher + " " + isbn + " " + cover + " " + condition + " " + price + " " + notes);
+		
 			
 			// Add a new book to the list using the information gathered from the ResultSet
-			bookList.add(new Book(bookID, title, author, year, edition, publisher, isbn, cover, condition, price, notes));
+			bookList.add(new Book(result.getInt("ID"),result.getString("Title"),result.getString("Author"),result.getInt("Year"),result.getInt("Edition"),
+					result.getString("Publisher"), result.getString("isbn"),result.getString("Cover"), result.getString("Condition"),result.getInt("Price"),
+					result.getString("Notes")));
 		}
+	}
+	
+	catch (SQLException e) {
+		System.out.println(e.getMessage());
 	}
 	// do the following even if there is an exception
 	finally { 
