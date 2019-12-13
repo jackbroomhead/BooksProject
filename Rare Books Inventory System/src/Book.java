@@ -1,4 +1,9 @@
-
+/**
+ * Book class, featuring a constructor for the specific instance variables and getter and setters.
+ * I've also included the toString method and htmlTable string which I use in the ServerControl class to create a HTML table.
+ * @author jackb
+ *
+ */
 public class Book {
 	
 	private int bookID;

@@ -10,6 +10,11 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
+/**
+ * HttpServer.create creates the local host server running on port 8000
+ * @author jackb
+ *
+ */
 public class ServerControl { 
 
 	public static void main(String[] args) throws Exception {
@@ -22,11 +27,11 @@ public class ServerControl {
 		
 		// default implementation of threading 
 		server.start();
-		System.out.println("The server is up and running on port 8000");
+		System.out.println("The server is running on port 8000");
 }
 	/**
-	 * Handler to RETRIEVE all records from the database
-	 * @author Martin Stanton
+	 * Handler to retrieve all books from the database
+	 * 
 	 *
 	 */
 	static class RetrieveHandler implements HttpHandler {
@@ -55,18 +60,36 @@ public class ServerControl {
 			
 	} 
 	
+	/**
+	 * PageHeader creates the HTML table with headings for each category
+	 * @return
+	 */
 public static String pageHeader() {
 		
 		String header = "<html>"
 				+ "<head></head>"
 				+ "<body>"
-				+ "<h1>Welcome to the Video Library System</h1>"
-				+ "<table>";
+				+ "<h1>Welcome to the Rare Books Inventory System</h1>"
+				+ "<table>" +"<tr><th>" 
+				+ "ID" + "</th><th>" 
+				+ "Title"+ "</th><th>" 
+				+ "Author" +"</th><th>" 
+				+ "Year" + "</th><th>"
+				+ "Edition" + "</th><th>"
+				+ "Publisher" + "</th><th>"
+				+ "ISBN" + "</th><th>"
+				+ "Cover" + "</th><th>"
+				+ "Condition" + "</th><th>"
+				+ "Price" + "</th><th>"
+				+ "Notes" + "</th><th>";
 				
 		return header;
 		
 	}
-
+/**
+ * Page footer ends the table, body and HTML tags
+ * 
+ */
 public static String pageFooter() {
 	
 	String footer = "</table>"
@@ -75,6 +98,14 @@ public static String pageFooter() {
 	
 	return footer;
 }
+
+/**
+ * Writes the response 
+ * 
+ * @param httpExchange
+ * @param r
+ * @throws IOException
+ */
 public static void writeResponse(HttpExchange httpExchange, String r) throws IOException {
 	
 	String response  = r;
